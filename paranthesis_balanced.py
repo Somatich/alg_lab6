@@ -4,42 +4,21 @@
 from stack import Stack, StackOverflowError, StackIsEmptyError
 s = '({[()]}{<>})'
 def is_paranthesis_balanced(s):
+    paradic = {'{':'}', '[':']', '(':')','<':'>',}
     a = list(s)
-    parat = Stack(len(a))
+    if len(a) == 0:
+        return True
+    parat = list()
     for i in a:
-        print(i)
-        try:
-            if i == '(':
-                parat.push('(')
-            elif i == ')':
-                if parat.pop() != '(':
-                    print('круглые скобочки не закрыты')
-                    return False
-            elif i == '[':
-                parat.push('[')
-            elif i == ']':
-                if parat.pop() != '[':
-                    print('квадратные скобочки не закрыты')
-                    return False
-            elif i == '{':
-                parat.push('{')
-            elif i == '}':
-                if parat.pop() != '{':
-                    print('фигурные скобочки не закрыты')
-                    return False
-            elif i == '<':
-                parat.push('<')
-            elif i == '>':
-                if parat.pop() != '<':
-                    print('треугольные скобочки не закрыты')
-                    return False
-        except StackOverflowError:
-            print('лишняя закрывающая скобочка DETECTED')
+        print('para',i)
+        print(parat)
+        if i in paradic.keys():
+            parat.append(i)
+        elif len(parat)>0 and i == paradic[parat[-1]]:
+            parat.pop()
+        else:
             return False
-        except StackIsEmptyError:
-            print('лишняя открывающая скобочка DETECTED')
-            return False
-    if parat.__len__() == 0:
+    if len(parat) == 0:
         print('выражение кайфовое')
         return True
     else:
